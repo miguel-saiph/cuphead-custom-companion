@@ -9,14 +9,19 @@ export default class GameController extends cc.Component {
     private timerPage: cc.Node = null;
     @property(cc.Node)
     private timerLengthPage: cc.Node = null;
+    @property(cc.Node)
+    private bossPage: cc.Node = null;
 
     private canInteract: boolean = true;
+
+    public static BOSS_ID: number = 0;
 
     protected onLoad(): void {
         this.titlePage.active = true;
         this.timerPage.active = false;
         this.timerLengthPage.active = false;
         this.timerLengthPage.on('length-set', this.onLengthPressed, this);
+        this.bossPage.active = false;
     }
 
     private onStartPressed(): void {
@@ -29,6 +34,26 @@ export default class GameController extends cc.Component {
         cc.tween(this.titlePage).to(0.5, {opacity: 0})
         .call(() => {
             this.titlePage.active = false;
+        }).start();
+        this.scheduleOnce(() => {
+            this.bossPage.active = true;
+            this.bossPage.opacity = 255;
+            this.canInteract = true;
+        }, 0.4);
+    }
+
+    private onBossPressed(event: any, param: string): void {
+        if (!this.canInteract) {
+            return;
+        }
+        this.canInteract = false;
+
+        GameController.BOSS_ID = parseInt(param);
+
+        this.bossPage.opacity = 255;
+        cc.tween(this.bossPage).to(0.5, {opacity: 0})
+        .call(() => {
+            this.bossPage.active = false;
         }).start();
         this.scheduleOnce(() => {
             this.timerLengthPage.active = true;

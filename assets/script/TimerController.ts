@@ -1,3 +1,5 @@
+import GameController from "./GameController";
+
 const {ccclass, property} = cc._decorator;
 
 @ccclass
@@ -11,8 +13,8 @@ export default class TimerController extends cc.Component {
     private startClip: cc.AudioClip = null;
     @property(cc.AudioClip)
     private endClip: cc.AudioClip = null;
-    @property(cc.AudioClip)
-    private music: cc.AudioClip = null;
+    @property([cc.AudioClip])
+    private musicClips: cc.AudioClip[] = [];
     @property(cc.AudioClip)
     private alertClip: cc.AudioClip = null;
 
@@ -128,7 +130,7 @@ export default class TimerController extends cc.Component {
         this.schedule(this.updateLabel, 1, this.timerMaxAmount - 1);
 
         if (this.isMusicOn) {
-            this.musicId = cc.audioEngine.playMusic(this.music, false);
+            this.musicId = cc.audioEngine.playMusic(this.musicClips[GameController.BOSS_ID], false);
         }
 
         this.maxTimerLabel.node.active = false;

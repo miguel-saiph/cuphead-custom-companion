@@ -1,0 +1,38 @@
+{
+  "ver": "2.3.7",
+  "uuid": "c85ee350-a0ba-4d40-8ff5-a8a31254b861",
+  "importer": "texture",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 233,
+  "height": 216,
+  "platformSettings": {},
+  "subMetas": {
+    "djimmi_the_great": {
+      "ver": "1.0.6",
+      "uuid": "c131b29c-984a-4220-9eba-2ce850830eb7",
+      "importer": "sprite-frame",
+      "rawTextureUuid": "c85ee350-a0ba-4d40-8ff5-a8a31254b861",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 233,
+      "height": 216,
+      "rawWidth": 233,
+      "rawHeight": 216,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}
