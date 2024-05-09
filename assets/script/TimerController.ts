@@ -39,6 +39,10 @@ export default class TimerController extends cc.Component {
     private audioOnFrame: cc.SpriteFrame = null;
     @property(cc.SpriteFrame)
     private audioOffFrame: cc.SpriteFrame = null;
+    @property(cc.Node)
+    private infoButton: cc.Node = null;
+    @property(cc.Node)
+    private infoContainer: cc.Node = null;
 
     private timerNumber: number = 0;
     private musicId: number = 0;
@@ -50,6 +54,13 @@ export default class TimerController extends cc.Component {
         this.resetTimerLabel();
         this.maxTimerLabel.string = this.timerMaxAmount.toString();
         cc.audioEngine.setMusicVolume(this.musicVolume);
+
+        console.log('BOSS ID: ', GameController.BOSS_ID);
+        if (GameController.BOSS_ID !== 1) {
+            this.infoButton.active = false;
+        } else {
+            this.infoButton.active = true;
+        }
     }
 
     protected start(): void {
@@ -57,6 +68,7 @@ export default class TimerController extends cc.Component {
         this.readyButton.active = true;
         this.stopButton.active = false;
         this.maxTimerLabel.node.active = false;
+        this.infoContainer.active = false;
     }
 
     private onReadyPressed(): void {
@@ -105,6 +117,10 @@ export default class TimerController extends cc.Component {
         this.init();
     }
 
+    private onInfoPressed(): void {
+        this.infoContainer.active = true;
+    }
+
     private hideReadyButton(): void {
         cc.tween(this.readyButton).to(0.5, {opacity: 0})
         .call(() => {
@@ -114,6 +130,12 @@ export default class TimerController extends cc.Component {
             this.stopButton.active = true;
             this.stopButton.opacity = 255;
         }, 0.25);
+    }
+
+    private onHideInfo(): void {
+        if (this.infoContainer.active) {
+            this.infoContainer.active = false;
+        }
     }
 
     private playAnnouncer(): void {
