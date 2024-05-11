@@ -1,4 +1,5 @@
 import GameController from "./GameController";
+import Utils from "./Utils";
 
 const {ccclass, property} = cc._decorator;
 
@@ -43,12 +44,16 @@ export default class TimerController extends cc.Component {
     private infoButton: cc.Node = null;
     @property(cc.Node)
     private infoContainer: cc.Node = null;
+    @property(cc.Node)
+    private koButton: cc.Node = null;
 
     private timerNumber: number = 0;
     private musicId: number = 0;
 
     private canInteract: boolean = true;
     private isMusicOn: boolean = true;
+
+    public static TIMER_LENGTH: number = 0;
 
     protected init(): void {
         this.resetTimerLabel();
@@ -99,6 +104,11 @@ export default class TimerController extends cc.Component {
         this.scheduleOnce(() => {
             this.maxTimerLabel.node.active = true;
         }, 0.25);
+
+        if (this.infoButton.opacity === 0) {
+            Utils.fadeInNode(this.infoButton);
+        }
+        Utils.fadeInNode(this.koButton);
     }
 
     private onAudioPressed(): void {
@@ -113,6 +123,7 @@ export default class TimerController extends cc.Component {
     private onTimerLengthPressed(event: any, param: string): void {
         const length: number = parseInt(param);
         this.timerMaxAmount = length;
+        TimerController.TIMER_LENGTH = length;
         event.target.parent.emit('length-set');
         this.init();
     }
@@ -144,6 +155,10 @@ export default class TimerController extends cc.Component {
         cc.audioEngine.setFinishCallback(id, () => {
             this.hideReadyButton();
             this.onTimerStart();
+            if (this.infoButton.active) {
+                Utils.fadeOutNode(this.infoButton);
+            }
+            Utils.fadeOutNode(this.koButton);
         });
     }
 
