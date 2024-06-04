@@ -1,3 +1,5 @@
+import Utils from "./Utils";
+
 const {ccclass, property} = cc._decorator;
 
 @ccclass
@@ -36,16 +38,7 @@ export default class GameController extends cc.Component {
         }
         this.canInteract = false;
 
-        this.titlePage.opacity = 255;
-        cc.tween(this.titlePage).to(0.5, {opacity: 0})
-        .call(() => {
-            this.titlePage.active = false;
-        }).start();
-        this.scheduleOnce(() => {
-            this.bossPage.active = true;
-            this.bossPage.opacity = 255;
-            this.canInteract = true;
-        }, 0.4);
+        Utils.screenTransition(this.titlePage, this.bossPage, this, () => { this.canInteract = true; });
     }
 
     private onBossPressed(event: any, param: string): void {
@@ -56,51 +49,19 @@ export default class GameController extends cc.Component {
 
         GameController.BOSS_ID = parseInt(param);
 
-        this.bossPage.opacity = 255;
-        cc.tween(this.bossPage).to(0.5, {opacity: 0})
-        .call(() => {
-            this.bossPage.active = false;
-        }).start();
-        this.scheduleOnce(() => {
-            this.timerLengthPage.active = true;
-            this.timerLengthPage.opacity = 255;
-        }, 0.4);
+        Utils.screenTransition(this.bossPage, this.timerLengthPage, this);
     }
 
     private onLengthPressed(): void {
-        this.timerLengthPage.opacity = 255;
-        cc.tween(this.timerLengthPage).to(0.5, {opacity: 0})
-        .call(() => {
-            this.timerLengthPage.active = false;
-        }).start();
-        this.scheduleOnce(() => {
-            this.timerPage.active = true;
-            this.timerPage.opacity = 255;
-        }, 0.4);
+        Utils.screenTransition(this.timerLengthPage, this.timerPage, this);
     }
 
     private onKoPressed(): void {
-        this.timerPage.opacity = 255;
-        cc.tween(this.timerPage).to(0.5, {opacity: 0})
-        .call(() => {
-            this.timerPage.active = false;
-        }).start();
-        this.scheduleOnce(() => {
-            this.koPage.active = true;
-            this.koPage.opacity = 255;
-        }, 0.4);
+        Utils.screenTransition(this.timerPage, this.koPage, this);
     }
 
     private onFinalGradePressed(): void {
-        this.koPage.opacity = 255;
-        cc.tween(this.koPage).to(0.5, {opacity: 0})
-        .call(() => {
-            this.koPage.active = false;
-        }).start();
-        this.scheduleOnce(() => {
-            this.gradePage.active = true;
-            this.gradePage.opacity = 255;
-        }, 0.4);
+        Utils.screenTransition(this.koPage, this.gradePage, this);
     }
 
     private onBackPressed(): void {
